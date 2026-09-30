@@ -8,6 +8,11 @@ set -e
 PROJECT=site-hypr
 REGION=southamerica-east1
 FUNCTION_NAME=biblioteca_data
+# Região do Vertex (Gemini do tagging) — a que está no ar desde 04/09; a Function segue em southamerica-east1
+VERTEX_REGION=us-central1
+# BigQuery: taxonomia <pilar>_<camada> (tabelas hyprops_app.library_decks_*)
+BQ_DATASET=hyprops_app
+BQ_TABLE_PREFIX=library_
 SERVICE_ACCOUNT="biblioteca-hypr@${PROJECT}.iam.gserviceaccount.com"
 DRIVE_ROOT_FOLDER_ID="1JFqbYViL8xyOFGyGF9yy4bwveRgfG37f"
 OAUTH_CLIENT_ID_DEFAULT="453955675457-f3kq1mc8bnucge5tn222nb6tjuobh4gh.apps.googleusercontent.com"
@@ -68,7 +73,7 @@ gcloud functions deploy "$FUNCTION_NAME" \
   --memory=512Mi \
   --timeout=540s \
   --service-account="$SERVICE_ACCOUNT" \
-  --set-env-vars="GCP_PROJECT=${PROJECT},GCP_REGION=${REGION},DRIVE_ROOT_FOLDER_ID=${DRIVE_ROOT_FOLDER_ID},BQ_DATASET=biblioteca,ALLOWED_HD=hypr.mobi,OAUTH_CLIENT_ID=${OAUTH_CLIENT_ID},SYNC_SECRET=${SYNC_SECRET},NAVI_API_KEY=${NAVI_API_KEY},TAGGING_MODEL=${TAGGING_MODEL},TAGGING_USE_LLM=${TAGGING_USE_LLM}"
+  --set-env-vars="GCP_PROJECT=${PROJECT},GCP_REGION=${VERTEX_REGION},DRIVE_ROOT_FOLDER_ID=${DRIVE_ROOT_FOLDER_ID},BQ_DATASET=${BQ_DATASET},BQ_TABLE_PREFIX=${BQ_TABLE_PREFIX},ALLOWED_HD=hypr.mobi,OAUTH_CLIENT_ID=${OAUTH_CLIENT_ID},SYNC_SECRET=${SYNC_SECRET},NAVI_API_KEY=${NAVI_API_KEY},TAGGING_MODEL=${TAGGING_MODEL},TAGGING_USE_LLM=${TAGGING_USE_LLM}"
 
 # Pega o URL
 FUNCTION_URL=$(gcloud functions describe "$FUNCTION_NAME" \

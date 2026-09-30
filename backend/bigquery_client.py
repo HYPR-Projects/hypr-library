@@ -12,14 +12,16 @@ log = logging.getLogger("biblioteca.bq")
 
 
 class BigQueryClient:
-    def __init__(self, project: str, dataset: str):
+    def __init__(self, project: str, dataset: str, table_prefix: str = ""):
         self.project = project
         self.dataset = dataset
         self.client = bigquery.Client(project=project)
-        self.tbl_meta = f"{project}.{dataset}.decks_metadata"
-        self.tbl_content = f"{project}.{dataset}.decks_content"
-        self.tbl_emb = f"{project}.{dataset}.decks_embeddings"
-        self.tbl_tags = f"{project}.{dataset}.decks_slide_tags"
+        # table_prefix: "library_" na taxonomia (hyprops_app.library_decks_*); "" = nomes antigos (biblioteca.decks_*)
+        base = f"{project}.{dataset}.{table_prefix}"
+        self.tbl_meta = f"{base}decks_metadata"
+        self.tbl_content = f"{base}decks_content"
+        self.tbl_emb = f"{base}decks_embeddings"
+        self.tbl_tags = f"{base}decks_slide_tags"
 
     # ============================================================
     # WRITE OPERATIONS (usado pelo sync)
