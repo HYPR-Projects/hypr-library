@@ -8,7 +8,8 @@ Cloud Function Python que serve a Biblioteca HYPR. Roda em `southamerica-east1` 
 |---|---|
 | `GCP_PROJECT` | `site-hypr` |
 | `DRIVE_ROOT_FOLDER_ID` | `1JFqbYViL8xyOFGyGF9yy4bwveRgfG37f` |
-| `BQ_DATASET` | `biblioteca` |
+| `BQ_DATASET` | `hyprops_app` |
+| `BQ_TABLE_PREFIX` | `library_` (tabelas `hyprops_app.library_decks_*`; vazio = nomes antigos `biblioteca.decks_*`, hoje views) |
 | `ALLOWED_HD` | `hypr.mobi` |
 | `OAUTH_CLIENT_ID` | `453955675457-f3kq1mc8bnucge5tn222nb6tjuobh4gh.apps.googleusercontent.com` |
 | `SERVICE_ACCOUNT` | `biblioteca-hypr@site-hypr.iam.gserviceaccount.com` |
@@ -133,7 +134,8 @@ pip install -r requirements.txt
 export GOOGLE_APPLICATION_CREDENTIALS=~/credentials/sa-biblioteca-hypr.json
 export GCP_PROJECT=site-hypr
 export DRIVE_ROOT_FOLDER_ID=1JFqbYViL8xyOFGyGF9yy4bwveRgfG37f
-export BQ_DATASET=biblioteca
+export BQ_DATASET=hyprops_app
+export BQ_TABLE_PREFIX=library_
 export ALLOWED_HD=hypr.mobi
 export OAUTH_CLIENT_ID=453955675457-f3kq1mc8bnucge5tn222nb6tjuobh4gh.apps.googleusercontent.com
 export SYNC_SECRET=teste123

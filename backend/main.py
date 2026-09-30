@@ -47,6 +47,7 @@ from sync import (
 GCP_PROJECT = os.environ["GCP_PROJECT"]
 DRIVE_ROOT_FOLDER_ID = os.environ["DRIVE_ROOT_FOLDER_ID"]
 BQ_DATASET = os.environ.get("BQ_DATASET", "biblioteca")
+BQ_TABLE_PREFIX = os.environ.get("BQ_TABLE_PREFIX", "")  # "library_" com BQ_DATASET=hyprops_app
 ALLOWED_HD = os.environ.get("ALLOWED_HD", "hypr.mobi")
 OAUTH_CLIENT_ID = os.environ["OAUTH_CLIENT_ID"]
 SYNC_SECRET = os.environ.get("SYNC_SECRET", "")  # Pra autenticar trigger de sync
@@ -81,7 +82,7 @@ def get_drive():
 def get_bq():
     global _bq_client
     if _bq_client is None:
-        _bq_client = BigQueryClient(project=GCP_PROJECT, dataset=BQ_DATASET)
+        _bq_client = BigQueryClient(project=GCP_PROJECT, dataset=BQ_DATASET, table_prefix=BQ_TABLE_PREFIX)
     return _bq_client
 
 
